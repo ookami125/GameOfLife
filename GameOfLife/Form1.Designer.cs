@@ -37,6 +37,7 @@
             this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.generateRandomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.updateSpeedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
@@ -50,7 +51,6 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.graphicsPanel1 = new GameOfLife.GraphicsPanel();
-            this.updateSpeedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -91,12 +91,14 @@
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.Size = new System.Drawing.Size(204, 26);
             this.openToolStripMenuItem.Text = "Open";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(204, 26);
             this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // importToolStripMenuItem
             // 
@@ -119,6 +121,13 @@
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(73, 24);
             this.optionsToolStripMenuItem.Text = "&Options";
+            // 
+            // updateSpeedToolStripMenuItem
+            // 
+            this.updateSpeedToolStripMenuItem.Name = "updateSpeedToolStripMenuItem";
+            this.updateSpeedToolStripMenuItem.Size = new System.Drawing.Size(179, 26);
+            this.updateSpeedToolStripMenuItem.Text = "Update Speed";
+            this.updateSpeedToolStripMenuItem.Click += new System.EventHandler(this.updateSpeedToolStripMenuItem_Click);
             // 
             // toolStripButton1
             // 
@@ -251,13 +260,6 @@
             this.graphicsPanel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.graphicsPanel1_MouseClick);
             this.graphicsPanel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.graphicsPanel1_MouseMove);
             this.graphicsPanel1.Resize += new System.EventHandler(this.graphicsPanel1_Resize);
-            // 
-            // updateSpeedToolStripMenuItem
-            // 
-            this.updateSpeedToolStripMenuItem.Name = "updateSpeedToolStripMenuItem";
-            this.updateSpeedToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
-            this.updateSpeedToolStripMenuItem.Text = "Update Speed";
-            this.updateSpeedToolStripMenuItem.Click += new System.EventHandler(this.updateSpeedToolStripMenuItem_Click);
             // 
             // Form1
             // 

@@ -357,6 +357,57 @@ namespace GameOfLife
             us.ShowDialog();
             timer.Interval = us.getSpeed();
         }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "Cells File|*.cells";
+            saveFileDialog1.Title = "Saving a cells file";
+            saveFileDialog1.ShowDialog();
+
+            using (StreamWriter file = new StreamWriter(saveFileDialog1.FileName))
+            {
+                file.Write(grid1.GetLength(0) + " " + grid1.GetLength(1) + "\n");
+                for (int i = 0; i < grid1.GetLength(1); i++)
+                {
+                    for (int j = 0; j < grid1.GetLength(0); j++)
+                        file.Write(grid1[i, j]?"O":".");
+                    file.Write("\n");
+                }
+            }
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog FileDialog = new OpenFileDialog();
+            FileDialog.Filter = "Cells File|*.cells";
+            FileDialog.Title = "Saving a cells file";
+            FileDialog.ShowDialog();
+
+            using (StreamReader file = new StreamReader(FileDialog.FileName))
+            {
+                string[] parts = file.ReadLine().Split(' ');
+                int a = Convert.ToInt32(parts[0]);
+                int b = Convert.ToInt32(parts[1]);
+                SetGridSize(a, b);
+                for (int i = 0; i < grid1.GetLength(1); i++)
+                {
+                    for (int j = 0; j < grid1.GetLength(0); j++)
+                        grid1[i, j] = grid2[i, j] = (file.Read() == 'O');
+                    while (file.Read()!='\n' && !file.EndOfStream);
+                }
+            }
+
+            graphicsPanel1.Invalidate();
+        }
+
+        private void SetGridSize(int a, int b)
+        {
+            width = a;
+            height = b;
+            grid1 = new bool[a, b];
+            grid2 = new bool[a, b];
+        }
     }
     /*
     public class GOL
