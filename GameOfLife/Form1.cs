@@ -14,31 +14,48 @@ namespace GameOfLife
 
     public partial class Form1 : Form
     {
+        bool showNeighborCount;
+        bool showGrid;
+        bool showHud;
+        bool wrap;
+        int width;
+        int height;
+        bool[,] grid1;
+        bool[,] grid2;
+
+        SolidBrush Cell_Color;
+        Pen Grid_Color;
+        SolidBrush Back_Color;
+        Timer timer = new Timer();
 
         public Form1()
         {
             InitializeComponent();
+
+
+            Cell_Color = new SolidBrush(Properties.Settings.Default.CellColor);
+            Grid_Color = new Pen(Properties.Settings.Default.GridColor);
+            Back_Color = new SolidBrush(Properties.Settings.Default.BackColor);
+
+            showNeighborCount = Properties.Settings.Default.showNeighborCount;
+            showGrid = Properties.Settings.Default.showGrid;
+            showHud = Properties.Settings.Default.showHud;
+
+            wrap = Properties.Settings.Default.Wrap;
+            width = Properties.Settings.Default.Width;
+            height = Properties.Settings.Default.Height;
+
+            grid1 = new bool[width, height];
+            grid2 = new bool[width, height];
+
+            timer.Interval = Properties.Settings.Default.TimerInterval;
         }
 
-        bool showNeighborCount = false;
-        bool showGrid = true;
-        bool showHud = true;
 
-        SolidBrush Cell_Color = (SolidBrush)Brushes.Black;
-        Pen Grid_Color = Pens.Black;
-        SolidBrush Back_Color = (SolidBrush)Brushes.White;
-        Timer timer = new Timer();
-
-        int width = 100;
-        int height = 100;
         float boxWidth = 0;
         float boxHeight = 0;
 
         int generation = 0;
-
-        bool wrap = true;
-        bool[,] grid1 = new bool[100, 100];
-        bool[,] grid2 = new bool[100, 100];
 
         Box Selection = null;
         Pen select_pen = new Pen(Color.Red, 3);
@@ -52,15 +69,6 @@ namespace GameOfLife
             boxWidth = (float)graphicsPanel1.Width / (float)width;
             boxHeight = (float)graphicsPanel1.Height / (float)height;
 
-            Cell_Color = new SolidBrush(Properties.Settings.Default.CellColor);
-            Grid_Color = new Pen(Properties.Settings.Default.GridColor);
-            Back_Color = new SolidBrush(Properties.Settings.Default.BackColor);
-
-            showNeighborCount = Properties.Settings.Default.showNeighborCount;
-            showGrid = Properties.Settings.Default.showGrid;
-            showHud = Properties.Settings.Default.showHud;
-
-            timer.Interval = Properties.Settings.Default.TimerInterval;
             timer.Tick += new EventHandler(TimerUpdate);
 
             f = new Font(SystemFonts.DefaultFont, FontStyle.Bold);
@@ -419,10 +427,29 @@ namespace GameOfLife
                 for (int i = 0; i < clipboard.GetLength(1); i++)
                     for (int j = 0; j < clipboard.GetLength(0); j++)
                         clipboard[j, i] = (char_array[i][j] == 'O');
-                Selection = new Box(0, 0, clipboard.GetLength(0), clipboard.GetLength(1));
+                Selection = new Box(0, 0, clipboard.GetLength(0) - 1, clipboard.GetLength(1) - 1);
                 pasting = true;
 
                 graphicsPanel1.Invalidate();
+            }
+        }
+
+        private void exportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "Cells File|*.cells";
+            saveFileDialog1.Title = "Saving a cells file";
+            saveFileDialog1.ShowDialog();
+
+            using (StreamWriter file = new StreamWriter(saveFileDialog1.FileName))
+            {
+                file.Write("!" + clipboard.GetLength(0) + " " + clipboard.GetLength(1) + "\n");
+                for (int i = 0; i < clipboard.GetLength(1); i++)
+                {
+                    for (int j = 0; j < clipboard.GetLength(0); j++)
+                        file.Write(clipboard[j, i] ? "O" : ".");
+                    file.Write("\n");
+                }
             }
         }
 
@@ -546,6 +573,10 @@ namespace GameOfLife
             Properties.Settings.Default.showHud = showHud;
             Properties.Settings.Default.showNeighborCount = showNeighborCount;
 
+            Properties.Settings.Default.Wrap = wrap;
+            Properties.Settings.Default.Width = width;
+            Properties.Settings.Default.Height = height;
+
             Properties.Settings.Default.TimerInterval = timer.Interval;
 
             Properties.Settings.Default.Save();
@@ -563,6 +594,10 @@ namespace GameOfLife
             showGrid = Properties.Settings.Default.showGrid;
             showHud = Properties.Settings.Default.showHud;
 
+            wrap = Properties.Settings.Default.Wrap;
+            width = Properties.Settings.Default.Width;
+            height = Properties.Settings.Default.Height;
+
             timer.Interval = Properties.Settings.Default.TimerInterval;
 
             graphicsPanel1.Invalidate();
@@ -579,6 +614,10 @@ namespace GameOfLife
             showNeighborCount = Properties.Settings.Default.showNeighborCount;
             showGrid = Properties.Settings.Default.showGrid;
             showHud = Properties.Settings.Default.showHud;
+
+            wrap = Properties.Settings.Default.Wrap;
+            width = Properties.Settings.Default.Width;
+            height = Properties.Settings.Default.Height;
 
             timer.Interval = Properties.Settings.Default.TimerInterval;
             graphicsPanel1.Invalidate();
