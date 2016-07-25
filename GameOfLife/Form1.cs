@@ -424,6 +424,10 @@ namespace GameOfLife
 
         private void setSizeToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Form2 ss = new Form2(width, height);
+            ss.ShowDialog();
+
+            SetGridSize(ss.getWidth(), ss.getHeight());
             //SetGridSize()
         }
     }
