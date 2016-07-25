@@ -31,7 +31,10 @@ namespace GameOfLife
         public Form1()
         {
             InitializeComponent();
+            this.AllowDrop = true;
 
+            this.DragEnter += new DragEventHandler(Form1_DragEnter);
+            this.DragDrop += new DragEventHandler(Form1_DragDrop);
 
             Cell_Color = new SolidBrush(Properties.Settings.Default.CellColor);
             Grid_Color = new Pen(Properties.Settings.Default.GridColor);
@@ -621,6 +624,41 @@ namespace GameOfLife
 
             timer.Interval = Properties.Settings.Default.TimerInterval;
             graphicsPanel1.Invalidate();
+        }
+
+        void Form1_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
+        }
+
+        void Form1_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            if (files.Length > 0)
+            {
+                string file = files[0];
+
+                List<char[]> lines = new List<char[]>();
+                foreach (string line in File.ReadLines(file))
+                {
+                    if (!line.StartsWith("!"))
+                        lines.Add(line.ToCharArray());
+                }
+                char[][] char_array = lines.ToArray();
+
+                clipboard = new bool[char_array[0].Length, char_array.Length];
+                for (int i = 0; i < clipboard.GetLength(1); i++)
+                    for (int j = 0; j < clipboard.GetLength(0); j++)
+                        clipboard[j, i] = (char_array[i][j] == 'O');
+
+                Point screenCoords = Cursor.Position;
+                Point crc = this.graphicsPanel1.PointToClient(screenCoords);
+                Selection = new Box((int)(crc.X/boxWidth), (int)(crc.Y/boxHeight), clipboard.GetLength(0) - 1, clipboard.GetLength(1) - 1);
+                pasting = true;
+
+                graphicsPanel1.Invalidate();
+            }
+            
         }
     }
 
