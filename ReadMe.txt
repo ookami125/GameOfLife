@@ -21,3 +21,7 @@ Other Included Features:
 		
 	Play/Pause Button:
 		The changing of the play pause button based on if the simulation is running or not.
+		
+	Drag and Drop:
+		You can drag and drop a cells file directly onto the screen which will place a
+		clipboard shadow directly where you drop the cells file.
