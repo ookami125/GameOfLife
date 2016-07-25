@@ -25,6 +25,9 @@ namespace GameOfLife
         float boxWidth = 0;
         float boxHeight = 0;
 
+        bool showNeighborCount = false;
+        bool showGrid = true;
+
         int generation = 0;
 
         bool wrap = true;
@@ -58,13 +61,21 @@ namespace GameOfLife
             g.DrawRectangle(Pens.Black, 0, 0, graphicsPanel1.Width-1, graphicsPanel1.Height-1);
             for (int x = 0; x < width; x++)
                 for (int y = 0; y < height; y++)
+                {
                     if (grid1[x, y])
                     {
                         count++;
                         g.FillRectangle(Brushes.Black, x * boxWidth, y * boxHeight, boxWidth, boxHeight);
                     }
                     else
-                        g.DrawRectangle(Pens.Black, x * boxWidth, y * boxHeight, boxWidth, boxHeight);
+                    {
+                        if(showGrid)
+                            g.DrawRectangle(Pens.Black, x * boxWidth, y * boxHeight, boxWidth, boxHeight);
+
+                    }
+                    if (showNeighborCount)
+                        g.DrawString($"{getNeighbors(grid1, x, y)}", f, Brushes.Red, x * boxWidth, y * boxHeight);
+                }
             if (Selection != null)
             {
                 Rectangle sel = Selection.rec;
@@ -438,7 +449,12 @@ namespace GameOfLife
 
         private void toggleNeighborCountToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            showNeighborCount = !showNeighborCount;
+        }
 
+        private void toggleGridViewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            showGrid = !showGrid;
         }
     }
     /*

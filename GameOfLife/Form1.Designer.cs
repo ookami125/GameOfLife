@@ -39,6 +39,8 @@
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updateSpeedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setSizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toggleNeighborCountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
@@ -52,8 +54,7 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.graphicsPanel1 = new GameOfLife.GraphicsPanel();
-            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toggleNeighborCountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toggleGridViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -130,16 +131,32 @@
             // updateSpeedToolStripMenuItem
             // 
             this.updateSpeedToolStripMenuItem.Name = "updateSpeedToolStripMenuItem";
-            this.updateSpeedToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.updateSpeedToolStripMenuItem.Size = new System.Drawing.Size(179, 26);
             this.updateSpeedToolStripMenuItem.Text = "Update Speed";
             this.updateSpeedToolStripMenuItem.Click += new System.EventHandler(this.updateSpeedToolStripMenuItem_Click);
             // 
             // setSizeToolStripMenuItem
             // 
             this.setSizeToolStripMenuItem.Name = "setSizeToolStripMenuItem";
-            this.setSizeToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.setSizeToolStripMenuItem.Size = new System.Drawing.Size(179, 26);
             this.setSizeToolStripMenuItem.Text = "Set Size";
             this.setSizeToolStripMenuItem.Click += new System.EventHandler(this.setSizeToolStripMenuItem_Click);
+            // 
+            // viewToolStripMenuItem
+            // 
+            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toggleNeighborCountToolStripMenuItem,
+            this.toggleGridViewToolStripMenuItem});
+            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(53, 24);
+            this.viewToolStripMenuItem.Text = "View";
+            // 
+            // toggleNeighborCountToolStripMenuItem
+            // 
+            this.toggleNeighborCountToolStripMenuItem.Name = "toggleNeighborCountToolStripMenuItem";
+            this.toggleNeighborCountToolStripMenuItem.Size = new System.Drawing.Size(241, 26);
+            this.toggleNeighborCountToolStripMenuItem.Text = "Toggle Neighbor Count";
+            this.toggleNeighborCountToolStripMenuItem.Click += new System.EventHandler(this.toggleNeighborCountToolStripMenuItem_Click);
             // 
             // toolStripButton1
             // 
@@ -273,20 +290,12 @@
             this.graphicsPanel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.graphicsPanel1_MouseMove);
             this.graphicsPanel1.Resize += new System.EventHandler(this.graphicsPanel1_Resize);
             // 
-            // viewToolStripMenuItem
+            // toggleGridViewToolStripMenuItem
             // 
-            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toggleNeighborCountToolStripMenuItem});
-            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(53, 24);
-            this.viewToolStripMenuItem.Text = "View";
-            // 
-            // toggleNeighborCountToolStripMenuItem
-            // 
-            this.toggleNeighborCountToolStripMenuItem.Name = "toggleNeighborCountToolStripMenuItem";
-            this.toggleNeighborCountToolStripMenuItem.Size = new System.Drawing.Size(241, 26);
-            this.toggleNeighborCountToolStripMenuItem.Text = "Toggle Neighbor Count";
-            this.toggleNeighborCountToolStripMenuItem.Click += new System.EventHandler(this.toggleNeighborCountToolStripMenuItem_Click);
+            this.toggleGridViewToolStripMenuItem.Name = "toggleGridViewToolStripMenuItem";
+            this.toggleGridViewToolStripMenuItem.Size = new System.Drawing.Size(241, 26);
+            this.toggleGridViewToolStripMenuItem.Text = "Toggle Grid View";
+            this.toggleGridViewToolStripMenuItem.Click += new System.EventHandler(this.toggleGridViewToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -335,6 +344,7 @@
         private System.Windows.Forms.ToolStripMenuItem setSizeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toggleNeighborCountToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toggleGridViewToolStripMenuItem;
     }
 }
 
