@@ -51,6 +51,7 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.graphicsPanel1 = new GameOfLife.GraphicsPanel();
+            this.setSizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -117,7 +118,8 @@
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.updateSpeedToolStripMenuItem});
+            this.updateSpeedToolStripMenuItem,
+            this.setSizeToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(73, 24);
             this.optionsToolStripMenuItem.Text = "&Options";
@@ -125,7 +127,7 @@
             // updateSpeedToolStripMenuItem
             // 
             this.updateSpeedToolStripMenuItem.Name = "updateSpeedToolStripMenuItem";
-            this.updateSpeedToolStripMenuItem.Size = new System.Drawing.Size(179, 26);
+            this.updateSpeedToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.updateSpeedToolStripMenuItem.Text = "Update Speed";
             this.updateSpeedToolStripMenuItem.Click += new System.EventHandler(this.updateSpeedToolStripMenuItem_Click);
             // 
@@ -261,6 +263,13 @@
             this.graphicsPanel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.graphicsPanel1_MouseMove);
             this.graphicsPanel1.Resize += new System.EventHandler(this.graphicsPanel1_Resize);
             // 
+            // setSizeToolStripMenuItem
+            // 
+            this.setSizeToolStripMenuItem.Name = "setSizeToolStripMenuItem";
+            this.setSizeToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.setSizeToolStripMenuItem.Text = "Set Size";
+            this.setSizeToolStripMenuItem.Click += new System.EventHandler(this.setSizeToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -305,6 +314,7 @@
         private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem generateRandomToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem updateSpeedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem setSizeToolStripMenuItem;
     }
 }
 

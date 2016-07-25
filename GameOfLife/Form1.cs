@@ -24,6 +24,9 @@ namespace GameOfLife
         int height = 100;
         float boxWidth = 0;
         float boxHeight = 0;
+
+        int generation = 0;
+
         bool wrap = true;
         bool[,] grid1 = new bool[100, 100];
         bool[,] grid2 = new bool[100, 100];
@@ -36,8 +39,10 @@ namespace GameOfLife
         bool pasting = false;
         bool[,] clipboard = null;
 
+        Font f;
         private void graphicsPanel1_Load(object sender, EventArgs e)
         {
+            f = new Font(SystemFonts.DefaultFont, FontStyle.Bold);
             boxWidth = (float)graphicsPanel1.Width / (float)width;
             boxHeight = (float)graphicsPanel1.Height / (float)height;
 
@@ -45,14 +50,19 @@ namespace GameOfLife
             timer.Tick += new EventHandler(TimerUpdate);
         }
 
+
         private void graphicsPanel1_Paint(object sender, PaintEventArgs e)
         {
+            int count = 0;
             Graphics g = e.Graphics;
             g.DrawRectangle(Pens.Black, 0, 0, graphicsPanel1.Width-1, graphicsPanel1.Height-1);
             for (int x = 0; x < width; x++)
                 for (int y = 0; y < height; y++)
-                    if(grid1[x,y])
+                    if (grid1[x, y])
+                    {
+                        count++;
                         g.FillRectangle(Brushes.Black, x * boxWidth, y * boxHeight, boxWidth, boxHeight);
+                    }
                     else
                         g.DrawRectangle(Pens.Black, x * boxWidth, y * boxHeight, boxWidth, boxHeight);
             if (Selection != null)
@@ -68,6 +78,8 @@ namespace GameOfLife
                         if (clipboard[x, y])
                             g.FillRectangle(Brushes.Blue, (sel.X + x) * boxWidth, (sel.Y + y) * boxHeight, boxWidth, boxHeight);
             }
+
+            g.DrawString($"Generation: {generation}\nAlive Cells: {count}", f, Brushes.Red, 16, 16);
             
         }
 
@@ -81,6 +93,7 @@ namespace GameOfLife
                     grid2[x, y] = (count == 3 || (count == 2) && grid1[x,y]);
                 }
             }
+            generation++;
             bool[,] temp = grid1;
             grid1 = grid2;
             grid2 = temp;
@@ -407,6 +420,11 @@ namespace GameOfLife
             height = b;
             grid1 = new bool[a, b];
             grid2 = new bool[a, b];
+        }
+
+        private void setSizeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //SetGridSize()
         }
     }
     /*
