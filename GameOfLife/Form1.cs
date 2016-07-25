@@ -40,6 +40,10 @@ namespace GameOfLife
         Pen select_pen = new Pen(Color.Red, 3);
         Pen paste_pen = new Pen(Color.Blue, 3);
 
+        SolidBrush Cell_Color = (SolidBrush)Brushes.Black;
+        Pen Grid_Color = Pens.Black;
+        SolidBrush Back_Color = (SolidBrush)Brushes.White;
+
         bool pasting = false;
         bool[,] clipboard = null;
 
@@ -59,19 +63,20 @@ namespace GameOfLife
         {
             int count = 0;
             Graphics g = e.Graphics;
-            g.DrawRectangle(Pens.Black, 0, 0, graphicsPanel1.Width-1, graphicsPanel1.Height-1);
+            g.FillRectangle(Back_Color, 0, 0, graphicsPanel1.Width - 1, graphicsPanel1.Height - 1);
+            g.DrawRectangle(Grid_Color, 0, 0, graphicsPanel1.Width-1, graphicsPanel1.Height-1);
             for (int x = 0; x < width; x++)
                 for (int y = 0; y < height; y++)
                 {
                     if (grid1[x, y])
                     {
                         count++;
-                        g.FillRectangle(Brushes.Black, x * boxWidth, y * boxHeight, boxWidth, boxHeight);
+                        g.FillRectangle(Cell_Color, x * boxWidth, y * boxHeight, boxWidth, boxHeight);
                     }
                     else
                     {
                         if(showGrid)
-                            g.DrawRectangle(Pens.Black, x * boxWidth, y * boxHeight, boxWidth, boxHeight);
+                            g.DrawRectangle(Grid_Color, x * boxWidth, y * boxHeight, boxWidth, boxHeight);
 
                     }
                     if (showNeighborCount)
@@ -482,22 +487,24 @@ namespace GameOfLife
             SetGridSize(ss.getWidth(), ss.getHeight());
 
             graphicsPanel1.Invalidate();
-            //SetGridSize()
         }
 
         private void toggleNeighborCountToolStripMenuItem_Click(object sender, EventArgs e)
         {
             showNeighborCount = !showNeighborCount;
+            graphicsPanel1.Invalidate();
         }
 
         private void toggleGridViewToolStripMenuItem_Click(object sender, EventArgs e)
         {
             showGrid = !showGrid;
+            graphicsPanel1.Invalidate();
         }
 
         private void toggleHudToolStripMenuItem_Click(object sender, EventArgs e)
         {
             showHud = !showHud;
+            graphicsPanel1.Invalidate();
         }
 
         private void zeroEdgeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -509,39 +516,22 @@ namespace GameOfLife
         {
             wrap = true;
         }
-    }
-    /*
-    public class GOL
-    {
-        List<long> cells = new List<long>();
 
-        Dictionary<long, int> neighs;
-        public void update()
+        private void colorSelectionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            neighs.Clear();
-
-        }
-        public bool isCellOn(int x, int y)
-        {
-            return cells.Contains(GetCellCode(x, y));
+            ColorPicker cp = new ColorPicker(Cell_Color.Color, Grid_Color.Color, Back_Color.Color);
+            cp.ShowDialog();
+            Cell_Color = new SolidBrush(cp.Color_Cell);
+            Grid_Color = new Pen(cp.Color_Grid);
+            Back_Color = new SolidBrush(cp.Color_Background);
         }
 
-        public long GetCellCode(int x, int y)
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            return (long)x << 32 | (long)(uint)y;
-        }
-
-        public long cellX(long cell)
-        {
-            return (int)(cell >> 32);
-        }
-
-        public long cellY(long cell)
-        {
-            return (int)(cell & 0xffffffffL);
+            Properties.Settings.Default.Save();
         }
     }
-    */
+
     public class Box
     {
         public Point P1;
