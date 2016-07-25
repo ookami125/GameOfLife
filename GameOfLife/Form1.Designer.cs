@@ -39,8 +39,13 @@
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updateSpeedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setSizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.boundaryTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.zeroEdgeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.wrappingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toggleNeighborCountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toggleGridViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toggleHudToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
@@ -54,7 +59,6 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.graphicsPanel1 = new GameOfLife.GraphicsPanel();
-            this.toggleGridViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -123,7 +127,8 @@
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.updateSpeedToolStripMenuItem,
-            this.setSizeToolStripMenuItem});
+            this.setSizeToolStripMenuItem,
+            this.boundaryTypeToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(73, 24);
             this.optionsToolStripMenuItem.Text = "&Options";
@@ -131,22 +136,46 @@
             // updateSpeedToolStripMenuItem
             // 
             this.updateSpeedToolStripMenuItem.Name = "updateSpeedToolStripMenuItem";
-            this.updateSpeedToolStripMenuItem.Size = new System.Drawing.Size(179, 26);
+            this.updateSpeedToolStripMenuItem.Size = new System.Drawing.Size(183, 26);
             this.updateSpeedToolStripMenuItem.Text = "Update Speed";
             this.updateSpeedToolStripMenuItem.Click += new System.EventHandler(this.updateSpeedToolStripMenuItem_Click);
             // 
             // setSizeToolStripMenuItem
             // 
             this.setSizeToolStripMenuItem.Name = "setSizeToolStripMenuItem";
-            this.setSizeToolStripMenuItem.Size = new System.Drawing.Size(179, 26);
+            this.setSizeToolStripMenuItem.Size = new System.Drawing.Size(183, 26);
             this.setSizeToolStripMenuItem.Text = "Set Size";
             this.setSizeToolStripMenuItem.Click += new System.EventHandler(this.setSizeToolStripMenuItem_Click);
+            // 
+            // boundaryTypeToolStripMenuItem
+            // 
+            this.boundaryTypeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.zeroEdgeToolStripMenuItem,
+            this.wrappingToolStripMenuItem});
+            this.boundaryTypeToolStripMenuItem.Name = "boundaryTypeToolStripMenuItem";
+            this.boundaryTypeToolStripMenuItem.Size = new System.Drawing.Size(183, 26);
+            this.boundaryTypeToolStripMenuItem.Text = "Boundary Type";
+            // 
+            // zeroEdgeToolStripMenuItem
+            // 
+            this.zeroEdgeToolStripMenuItem.Name = "zeroEdgeToolStripMenuItem";
+            this.zeroEdgeToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.zeroEdgeToolStripMenuItem.Text = "Zero Edge";
+            this.zeroEdgeToolStripMenuItem.Click += new System.EventHandler(this.zeroEdgeToolStripMenuItem_Click);
+            // 
+            // wrappingToolStripMenuItem
+            // 
+            this.wrappingToolStripMenuItem.Name = "wrappingToolStripMenuItem";
+            this.wrappingToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.wrappingToolStripMenuItem.Text = "Wrapping";
+            this.wrappingToolStripMenuItem.Click += new System.EventHandler(this.wrappingToolStripMenuItem_Click);
             // 
             // viewToolStripMenuItem
             // 
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toggleNeighborCountToolStripMenuItem,
-            this.toggleGridViewToolStripMenuItem});
+            this.toggleGridViewToolStripMenuItem,
+            this.toggleHudToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(53, 24);
             this.viewToolStripMenuItem.Text = "View";
@@ -157,6 +186,20 @@
             this.toggleNeighborCountToolStripMenuItem.Size = new System.Drawing.Size(241, 26);
             this.toggleNeighborCountToolStripMenuItem.Text = "Toggle Neighbor Count";
             this.toggleNeighborCountToolStripMenuItem.Click += new System.EventHandler(this.toggleNeighborCountToolStripMenuItem_Click);
+            // 
+            // toggleGridViewToolStripMenuItem
+            // 
+            this.toggleGridViewToolStripMenuItem.Name = "toggleGridViewToolStripMenuItem";
+            this.toggleGridViewToolStripMenuItem.Size = new System.Drawing.Size(241, 26);
+            this.toggleGridViewToolStripMenuItem.Text = "Toggle Grid View";
+            this.toggleGridViewToolStripMenuItem.Click += new System.EventHandler(this.toggleGridViewToolStripMenuItem_Click);
+            // 
+            // toggleHudToolStripMenuItem
+            // 
+            this.toggleHudToolStripMenuItem.Name = "toggleHudToolStripMenuItem";
+            this.toggleHudToolStripMenuItem.Size = new System.Drawing.Size(241, 26);
+            this.toggleHudToolStripMenuItem.Text = "Toggle Hud";
+            this.toggleHudToolStripMenuItem.Click += new System.EventHandler(this.toggleHudToolStripMenuItem_Click);
             // 
             // toolStripButton1
             // 
@@ -290,13 +333,6 @@
             this.graphicsPanel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.graphicsPanel1_MouseMove);
             this.graphicsPanel1.Resize += new System.EventHandler(this.graphicsPanel1_Resize);
             // 
-            // toggleGridViewToolStripMenuItem
-            // 
-            this.toggleGridViewToolStripMenuItem.Name = "toggleGridViewToolStripMenuItem";
-            this.toggleGridViewToolStripMenuItem.Size = new System.Drawing.Size(241, 26);
-            this.toggleGridViewToolStripMenuItem.Text = "Toggle Grid View";
-            this.toggleGridViewToolStripMenuItem.Click += new System.EventHandler(this.toggleGridViewToolStripMenuItem_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -345,6 +381,10 @@
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toggleNeighborCountToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toggleGridViewToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toggleHudToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem boundaryTypeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem zeroEdgeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem wrappingToolStripMenuItem;
     }
 }
 

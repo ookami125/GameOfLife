@@ -27,6 +27,7 @@ namespace GameOfLife
 
         bool showNeighborCount = false;
         bool showGrid = true;
+        bool showHud = true;
 
         int generation = 0;
 
@@ -89,8 +90,8 @@ namespace GameOfLife
                         if (clipboard[x, y])
                             g.FillRectangle(Brushes.Blue, (sel.X + x) * boxWidth, (sel.Y + y) * boxHeight, boxWidth, boxHeight);
             }
-
-            g.DrawString($"Generation: {generation}\nAlive Cells: {count}", f, Brushes.Red, 16, 16);
+            if(showHud)
+                g.DrawString($"Generation: {generation}\nAlive Cells: {count}", f, Brushes.Red, 16, 16);
             
         }
 
@@ -321,11 +322,43 @@ namespace GameOfLife
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
 
+            OpenFileDialog FileDialog = new OpenFileDialog();
+            FileDialog.Filter = "Cells File|*.cells";
+            FileDialog.Title = "Saving a cells file";
+            if (FileDialog.ShowDialog() == DialogResult.OK)
+            {
+                List<char[]> lines = new List<char[]>();
+                foreach (string line in File.ReadLines(FileDialog.FileName))
+                {
+                    if(!line.StartsWith("!"))
+                        lines.Add(line.ToCharArray());
+                }
+                char[][] char_array = lines.ToArray();
+
+                SetGridSize(char_array[0].Length, char_array.Length);
+                for (int i = 0; i < grid1.GetLength(1); i++)
+                    for (int j = 0; j < grid1.GetLength(0); j++)
+                        grid1[j, i] = grid2[j, i] = (char_array[i][j] == 'O');
+            }
         }
 
         private void toolStripButton3_Click(object sender, EventArgs e)
         {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "Cells File|*.cells";
+            saveFileDialog1.Title = "Saving a cells file";
+            saveFileDialog1.ShowDialog();
 
+            using (StreamWriter file = new StreamWriter(saveFileDialog1.FileName))
+            {
+                file.Write("!" + grid1.GetLength(0) + " " + grid1.GetLength(1) + "\n");
+                for (int i = 0; i < grid1.GetLength(1); i++)
+                {
+                    for (int j = 0; j < grid1.GetLength(0); j++)
+                        file.Write(grid1[i, j] ? "O" : ".");
+                    file.Write("\n");
+                }
+            }
         }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
@@ -356,22 +389,27 @@ namespace GameOfLife
 
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "Run Length Encoded Files (.rle)|*.rle|All Files (*.*)|*.*";
-            ofd.FilterIndex = 1;
-
-            ofd.Multiselect = false;
-
-            if(ofd.ShowDialog() == DialogResult.OK)
+            OpenFileDialog FileDialog = new OpenFileDialog();
+            FileDialog.Filter = "Cells File|*.cells";
+            FileDialog.Title = "Saving a cells file";
+            if (FileDialog.ShowDialog() == DialogResult.OK)
             {
-                StreamReader file = new StreamReader(ofd.FileName);
-                string line;
-                while ((line = file.ReadLine()) != null)
+                List<char[]> lines = new List<char[]>();
+                foreach (string line in File.ReadLines(FileDialog.FileName))
                 {
-                    if (line.StartsWith("#"))
-                        continue;
-                    
+                    if (!line.StartsWith("!"))
+                        lines.Add(line.ToCharArray());
                 }
+                char[][] char_array = lines.ToArray();
+
+                clipboard = new bool[char_array[0].Length, char_array.Length];
+                for (int i = 0; i < clipboard.GetLength(1); i++)
+                    for (int j = 0; j < clipboard.GetLength(0); j++)
+                        clipboard[j, i] = (char_array[i][j] == 'O');
+                Selection = new Box(0, 0, clipboard.GetLength(0), clipboard.GetLength(1));
+                pasting = true;
+
+                graphicsPanel1.Invalidate();
             }
         }
 
@@ -391,7 +429,7 @@ namespace GameOfLife
 
             using (StreamWriter file = new StreamWriter(saveFileDialog1.FileName))
             {
-                file.Write(grid1.GetLength(0) + " " + grid1.GetLength(1) + "\n");
+                file.Write("!" + grid1.GetLength(0) + " " + grid1.GetLength(1) + "\n");
                 for (int i = 0; i < grid1.GetLength(1); i++)
                 {
                     for (int j = 0; j < grid1.GetLength(0); j++)
@@ -406,20 +444,20 @@ namespace GameOfLife
             OpenFileDialog FileDialog = new OpenFileDialog();
             FileDialog.Filter = "Cells File|*.cells";
             FileDialog.Title = "Saving a cells file";
-            FileDialog.ShowDialog();
-
-            using (StreamReader file = new StreamReader(FileDialog.FileName))
+            if (FileDialog.ShowDialog() == DialogResult.OK)
             {
-                string[] parts = file.ReadLine().Split(' ');
-                int a = Convert.ToInt32(parts[0]);
-                int b = Convert.ToInt32(parts[1]);
-                SetGridSize(a, b);
-                for (int i = 0; i < grid1.GetLength(1); i++)
+                List<char[]> lines = new List<char[]>();
+                foreach (string line in File.ReadLines(FileDialog.FileName))
                 {
-                    for (int j = 0; j < grid1.GetLength(0); j++)
-                        grid1[i, j] = grid2[i, j] = (file.Read() == 'O');
-                    while (file.Read()!='\n' && !file.EndOfStream);
+                    if (!line.StartsWith("!"))
+                        lines.Add(line.ToCharArray());
                 }
+                char[][] char_array = lines.ToArray();
+
+                SetGridSize(char_array[0].Length, char_array.Length);
+                for (int i = 0; i < grid1.GetLength(1); i++)
+                    for (int j = 0; j < grid1.GetLength(0); j++)
+                        grid1[j, i] = grid2[j, i] = (char_array[i][j] == 'O');
             }
         }
 
@@ -455,6 +493,21 @@ namespace GameOfLife
         private void toggleGridViewToolStripMenuItem_Click(object sender, EventArgs e)
         {
             showGrid = !showGrid;
+        }
+
+        private void toggleHudToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            showHud = !showHud;
+        }
+
+        private void zeroEdgeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            wrap = false;
+        }
+
+        private void wrappingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            wrap = true;
         }
     }
     /*
