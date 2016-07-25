@@ -20,42 +20,50 @@ namespace GameOfLife
             InitializeComponent();
         }
 
+        bool showNeighborCount = false;
+        bool showGrid = true;
+        bool showHud = true;
+
+        SolidBrush Cell_Color = (SolidBrush)Brushes.Black;
+        Pen Grid_Color = Pens.Black;
+        SolidBrush Back_Color = (SolidBrush)Brushes.White;
+        Timer timer = new Timer();
+
         int width = 100;
         int height = 100;
         float boxWidth = 0;
         float boxHeight = 0;
-
-        bool showNeighborCount = false;
-        bool showGrid = true;
-        bool showHud = true;
 
         int generation = 0;
 
         bool wrap = true;
         bool[,] grid1 = new bool[100, 100];
         bool[,] grid2 = new bool[100, 100];
-        Timer timer = new Timer();
 
         Box Selection = null;
         Pen select_pen = new Pen(Color.Red, 3);
         Pen paste_pen = new Pen(Color.Blue, 3);
-
-        SolidBrush Cell_Color = (SolidBrush)Brushes.Black;
-        Pen Grid_Color = Pens.Black;
-        SolidBrush Back_Color = (SolidBrush)Brushes.White;
-
         bool pasting = false;
         bool[,] clipboard = null;
 
         Font f;
         private void graphicsPanel1_Load(object sender, EventArgs e)
         {
-            f = new Font(SystemFonts.DefaultFont, FontStyle.Bold);
             boxWidth = (float)graphicsPanel1.Width / (float)width;
             boxHeight = (float)graphicsPanel1.Height / (float)height;
 
-            timer.Interval = 5;
+            Cell_Color = new SolidBrush(Properties.Settings.Default.CellColor);
+            Grid_Color = new Pen(Properties.Settings.Default.GridColor);
+            Back_Color = new SolidBrush(Properties.Settings.Default.BackColor);
+
+            showNeighborCount = Properties.Settings.Default.showNeighborCount;
+            showGrid = Properties.Settings.Default.showGrid;
+            showHud = Properties.Settings.Default.showHud;
+
+            timer.Interval = Properties.Settings.Default.TimerInterval;
             timer.Tick += new EventHandler(TimerUpdate);
+
+            f = new Font(SystemFonts.DefaultFont, FontStyle.Bold);
         }
 
 
@@ -524,11 +532,56 @@ namespace GameOfLife
             Cell_Color = new SolidBrush(cp.Color_Cell);
             Grid_Color = new Pen(cp.Color_Grid);
             Back_Color = new SolidBrush(cp.Color_Background);
+
+            graphicsPanel1.Invalidate();
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
+            Properties.Settings.Default.CellColor = Cell_Color.Color;
+            Properties.Settings.Default.GridColor = Grid_Color.Color;
+            Properties.Settings.Default.BackColor = Back_Color.Color;
+
+            Properties.Settings.Default.showGrid = showGrid;
+            Properties.Settings.Default.showHud = showHud;
+            Properties.Settings.Default.showNeighborCount = showNeighborCount;
+
+            Properties.Settings.Default.TimerInterval = timer.Interval;
+
             Properties.Settings.Default.Save();
+        }
+
+        private void resetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Reset();
+
+            Cell_Color = new SolidBrush(Properties.Settings.Default.CellColor);
+            Grid_Color = new Pen(Properties.Settings.Default.GridColor);
+            Back_Color = new SolidBrush(Properties.Settings.Default.BackColor);
+
+            showNeighborCount = Properties.Settings.Default.showNeighborCount;
+            showGrid = Properties.Settings.Default.showGrid;
+            showHud = Properties.Settings.Default.showHud;
+
+            timer.Interval = Properties.Settings.Default.TimerInterval;
+
+            graphicsPanel1.Invalidate();
+        }
+
+        private void reloadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Reload();
+
+            Cell_Color = new SolidBrush(Properties.Settings.Default.CellColor);
+            Grid_Color = new Pen(Properties.Settings.Default.GridColor);
+            Back_Color = new SolidBrush(Properties.Settings.Default.BackColor);
+
+            showNeighborCount = Properties.Settings.Default.showNeighborCount;
+            showGrid = Properties.Settings.Default.showGrid;
+            showHud = Properties.Settings.Default.showHud;
+
+            timer.Interval = Properties.Settings.Default.TimerInterval;
+            graphicsPanel1.Invalidate();
         }
     }
 

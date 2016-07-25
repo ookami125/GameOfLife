@@ -42,6 +42,8 @@
             this.boundaryTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.zeroEdgeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.wrappingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toggleNeighborCountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toggleGridViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -129,7 +131,9 @@
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.updateSpeedToolStripMenuItem,
             this.setSizeToolStripMenuItem,
-            this.boundaryTypeToolStripMenuItem});
+            this.boundaryTypeToolStripMenuItem,
+            this.resetToolStripMenuItem,
+            this.reloadToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(73, 24);
             this.optionsToolStripMenuItem.Text = "&Options";
@@ -137,14 +141,14 @@
             // updateSpeedToolStripMenuItem
             // 
             this.updateSpeedToolStripMenuItem.Name = "updateSpeedToolStripMenuItem";
-            this.updateSpeedToolStripMenuItem.Size = new System.Drawing.Size(183, 26);
+            this.updateSpeedToolStripMenuItem.Size = new System.Drawing.Size(191, 26);
             this.updateSpeedToolStripMenuItem.Text = "Update Speed";
             this.updateSpeedToolStripMenuItem.Click += new System.EventHandler(this.updateSpeedToolStripMenuItem_Click);
             // 
             // setSizeToolStripMenuItem
             // 
             this.setSizeToolStripMenuItem.Name = "setSizeToolStripMenuItem";
-            this.setSizeToolStripMenuItem.Size = new System.Drawing.Size(183, 26);
+            this.setSizeToolStripMenuItem.Size = new System.Drawing.Size(191, 26);
             this.setSizeToolStripMenuItem.Text = "Set Size";
             this.setSizeToolStripMenuItem.Click += new System.EventHandler(this.setSizeToolStripMenuItem_Click);
             // 
@@ -154,7 +158,7 @@
             this.zeroEdgeToolStripMenuItem,
             this.wrappingToolStripMenuItem});
             this.boundaryTypeToolStripMenuItem.Name = "boundaryTypeToolStripMenuItem";
-            this.boundaryTypeToolStripMenuItem.Size = new System.Drawing.Size(183, 26);
+            this.boundaryTypeToolStripMenuItem.Size = new System.Drawing.Size(191, 26);
             this.boundaryTypeToolStripMenuItem.Text = "Boundary Type";
             // 
             // zeroEdgeToolStripMenuItem
@@ -170,6 +174,20 @@
             this.wrappingToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
             this.wrappingToolStripMenuItem.Text = "Wrapping";
             this.wrappingToolStripMenuItem.Click += new System.EventHandler(this.wrappingToolStripMenuItem_Click);
+            // 
+            // resetToolStripMenuItem
+            // 
+            this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
+            this.resetToolStripMenuItem.Size = new System.Drawing.Size(191, 26);
+            this.resetToolStripMenuItem.Text = "Reset to Default";
+            this.resetToolStripMenuItem.Click += new System.EventHandler(this.resetToolStripMenuItem_Click);
+            // 
+            // reloadToolStripMenuItem
+            // 
+            this.reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
+            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(191, 26);
+            this.reloadToolStripMenuItem.Text = "Reload";
+            this.reloadToolStripMenuItem.Click += new System.EventHandler(this.reloadToolStripMenuItem_Click);
             // 
             // viewToolStripMenuItem
             // 
@@ -396,6 +414,8 @@
         private System.Windows.Forms.ToolStripMenuItem zeroEdgeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem wrappingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem colorSelectionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem resetToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem reloadToolStripMenuItem;
     }
 }
 
