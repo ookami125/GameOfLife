@@ -353,7 +353,9 @@ namespace GameOfLife
 
         private void updateSpeedToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            UpdateSpeed us = new UpdateSpeed(timer.Interval);
+            us.ShowDialog();
+            timer.Interval = us.getSpeed();
         }
     }
     /*
