@@ -410,8 +410,6 @@ namespace GameOfLife
                     while (file.Read()!='\n' && !file.EndOfStream);
                 }
             }
-
-            graphicsPanel1.Invalidate();
         }
 
         private void SetGridSize(int a, int b)
@@ -420,6 +418,11 @@ namespace GameOfLife
             height = b;
             grid1 = new bool[a, b];
             grid2 = new bool[a, b];
+
+            boxWidth = (float)graphicsPanel1.Width / (float)width;
+            boxHeight = (float)graphicsPanel1.Height / (float)height;
+
+            graphicsPanel1.Invalidate();
         }
 
         private void setSizeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -428,7 +431,14 @@ namespace GameOfLife
             ss.ShowDialog();
 
             SetGridSize(ss.getWidth(), ss.getHeight());
+
+            graphicsPanel1.Invalidate();
             //SetGridSize()
+        }
+
+        private void toggleNeighborCountToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
     /*
